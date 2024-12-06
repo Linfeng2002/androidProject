@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.mall.mapper.AndroidCommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.liu.mall.model.AndroidComment">
+        <id column="id" property="id" />
+        <result column="article_id" property="articleId" />
+        <result column="content" property="content" />
+        <result column="create_time" property="createTime" />
+        <result column="like_number" property="likeNumber" />
+        <result column="comment_degree" property="commentDegree" />
+        <result column="parent_comment_id" property="parentCommentId" />
+        <result column="comment_user_id" property="commentUserId" />
+        <result column="username" property="username"/>
+        <result column="user_image" property="userImage"/>
+    </resultMap>
+    <insert id="insertBatch">
+        insert ignore into android_comment(id ,article_id, content, create_time, comment_degree, parent_comment_id, comment_user_id, username, user_image)
+        values
+        <foreach collection="comments" item="comment" separator=",">
+            (#{comment.id}, #{comment.articleId},#{comment.content},#{comment.createTime},#{comment.commentDegree},#{comment.parentCommentId},#{comment.commentUserId},#{comment.username},#{comment.userImage})
+        </foreach>
+    </insert>
+    <select id="getCommentByArticleId" resultType="com.liu.mall.model.AndroidComment">
+        select id, article_id, content, create_time, like_number, comment_degree, parent_comment_id, comment_user_id,username,user_image from android_comment
+        where article_id in 
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.mall.mapper.AndroidArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.liu.mall.model.AndroidArticle">
+        <id column="id" property="id" />
+        <result column="author" property="authorId" />
+        <result column="content" property="content" />
+        <result column="title" property="title" />
+        <result column="author_image" property="authorImage" />
+        <result column="collect_number" property="collectNumber" />
+        <result column="like_number" property="likeNumber" />
+        <result column="picture" property="picture" />
+        <result column="visit_num" property="visitNum" />
+        <result column="author_username" property="authorUsername" />
+    </resultMap>
+    <select id="getRecommendArticle" resultType="com.liu.mall.model.AndroidArticle">
+        select id, author_id, content, title, author_image, collect_number, like_number, picture, visit_num, author_username from android_article
+            where
+        <trim prefixOverrides="OR"> <foreach collection="logs" item="log"> content LIKE CONCAT('%', #{log}, '%') OR </foreach> </trim>
+    </select>
+
+    <!--    <select id="getSearchArticle" resultType="com.liu.mall.model.AndroidArticle">-->
+<!--        select id, author, content, title, author_image, collect_number, like_number, picture, visit_num,author_username, MATCH(title,content) AGAINST(-->
+<!--            <trim suffix="'" prefix="'">-->
+<!--                #{message}-->
+<!--            </trim> ) AS score-->
+<!--        from android_article-->
+<!--        where  MATCH(title,content) AGAINST(<trim suffix="'" prefix="'">-->
+<!--        #{message}-->
+<!--    </trim> )-->
+<!--        order by score DESC-->
+<!--        LIMIT 30-->
+<!--    </select>-->
+<!--    <select id="getRecommendArticle" resultType="com.liu.mall.model.AndroidArticle">-->
+<!--        select  id, author, content, title, author_image, collect_number, like_number, picture, visit_num, author_username-->
+
+<!--        <if test="logs != null and logs.size>0">-->
+<!--            , MATCH(title,content) AGAINST(-->
+<!--            <trim prefix="'" suffix="'" suffixOverrides=" OR ">-->
+<!--                <foreach collection="logs" item="keyword" index="index" separator=" ">-->
+<!--                    <choose>-->
+<!--                        <when test="index == 0"> &gt;#{keyword}</when>-->
+<!--                        <when test="index == 1">#{keyword} </when>-->
+<!--                        <when test="index == 2">&lt;#{keyword} </when>-->
+<!--                    </choose>-->
+<!--                </foreach>-->
+<!--            </trim>-->
+<!--            IN BOOLEAN MODE) AS score-->
+<!--        </if>-->
+<!--        from android_article-->
+<!--        <if test="logs != null and logs.size>0">-->
+<!--            where MATCH(title,content) AGAINST(-->
+<!--            <trim prefix="'" suffix="'" suffixOverrides=" OR ">-->
+<!--                <foreach collection="logs" item="keyword" index="index" separator=" ">-->
+<!--                    <choose>-->
+<!--                        <when test="index == 0"> &gt;#{keyword}</when>-->
+<!--                        <when test="index == 1">#{keyword} </when>-->
+<!--                        <when test="index == 2">&lt;#{keyword} </when>-->
+<!--                    </choose>-->
+<!--                </foreach>-->
+<!--            </trim>-->
+<!--            IN BOOLEAN MODE)-->
+<!--            order by score DESC-->
+<!--        </if>-->
+<!--        limit 20-->
+<!--    </select>-->
+</mapper>

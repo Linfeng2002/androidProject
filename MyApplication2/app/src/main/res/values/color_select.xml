@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPressed">#FF0000</color> <!-- 按下状态的颜色：红色 -->
+    <color name="colorFocused">#00FF00</color> <!-- 获得焦点状态的颜色：绿色 -->
+    <color name="colorDisabled">#888888</color> <!-- 禁用状态的颜色：灰色 -->
+    <color name="colorDefault">#000000</color> <!-- 默认状态的颜色：蓝色 -->
+</resources>

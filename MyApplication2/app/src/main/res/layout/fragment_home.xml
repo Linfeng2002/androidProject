@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.home.HomeFragment"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_marginHorizontal="10dp">
+        <com.example.myapplication.custom.CustomScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!-- 功能选择-->
+                <GridView android:id="@+id/action_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:numColumns="4"
+                    android:orientation="horizontal"
+                    android:horizontalSpacing="3dp"
+                    android:verticalSpacing="3dp"
+                    android:descendantFocusability="blocksDescendants"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginTop="30dp" />
+                <!-- 搜索栏-->
+                <SearchView
+                    android:id="@+id/top_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:queryHint="千里之行始于足下哦"
+                    android:iconifiedByDefault="false"
+                    android:background="@drawable/shape_edit_normal"
+                    android:layout_marginVertical="10dp"/>
+                <!-- 攻略推送-->
+                <GridView android:id="@+id/place_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="600dp"
+                    android:numColumns="2"
+                    android:verticalSpacing="15dp"
+                    android:horizontalSpacing="15dp"
+                    android:orientation="vertical">
+                </GridView>
+            </LinearLayout>
+        </com.example.myapplication.custom.CustomScrollView>
+
+
+
+
+</LinearLayout>

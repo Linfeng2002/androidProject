@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.mall.mapper.AndroidUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.liu.mall.model.AndroidUser">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="member_experience" property="memberExperience" />
+        <result column="collect_article_id" property="collectArticleId" />
+        <result column="visit_article_id" property="visitArticleId" />
+        <result column="discount_coupon_id" property="discountCouponId" />
+        <result column="order_id" property="orderId" />
+        <result column="article_id" property="articleId" />
+        <result column="followers" property="followers" />
+        <result column="like_number" property="likeNumber" />
+        <result column="fans" property="fans" />
+        <result column="user_picture" property="userPicture" />
+        <result column="like_article_id" property="likeArticleId"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liu.mall.mapper.UmsAdminMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.liu.mall.model.UmsAdmin">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="icon" property="icon" />
+        <result column="email" property="email" />
+        <result column="nick_name" property="nickName" />
+        <result column="note" property="note" />
+        <result column="create_time" property="createTime" />
+        <result column="login_time" property="loginTime" />
+        <result column="status" property="status" />
+    </resultMap>
+    <select id="getAdminResources" resultType="com.liu.mall.model.UmsResource">
+        select
+            urs.description  description,
+            urs.url  url,
+            urs.create_time create_time,
+            urs.name name,
+            urs.id id,
+            urs.category_id category_id
+        from ums_admin_role_relation  uarr
+            left join ums_role_resource_relation  urr on uarr.role_id=urr.role_id
+            left join ums_role  ur on urr.role_id=ur.id
+            left join ums_resource  urs on urs.id=urr.resource_id
+        where uarr.admin_id = ${id}
+        and urs.id is not null
+
+    </select>
+    <select id="getUsernameById" resultMap="BaseResultMap">
+        select username
+        from ums_admin
+        where id = #{id,jdbcType=NUMERIC}
+    </select>
+
+</mapper>
