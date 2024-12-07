@@ -78,7 +78,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
          article = MainApplication.getInstance().articleList.get(getIntent().getIntExtra("index",-1)) ;
         if (article != null) {
             setView(binding,article);
-            article.visitNum++;//游览次数+1
+
         }
         binding.articleDetailLike.setOnClickListener(view -> {//点赞按钮点击
             if(ifLike>-1){//首先要登录才能点击
@@ -92,7 +92,6 @@ public class ArticleDetailActivity extends AppCompatActivity {
                     article.likeNum++;
                 }
                 like.setSelected(!like.isSelected());
-                personalInformation.likeArticleId=likeArticleId;
                 binding.articleDetailLike.setText(String.valueOf(article.likeNum));
             }else gotoLogin();
         });
@@ -141,7 +140,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
             new Thread(() -> {
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Gson gson = new Gson();
-                Request build = new Request.Builder().url("http://10.44.174.235:8083/androidUser/getByUsername?username=" + article.authorName).build();
+                Request build = new Request.Builder().url("http://192.168.1.7:8083/androidUser/getByUsername?username=" + article.authorName).build();
                 okHttpClient.newCall(build).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -178,6 +177,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        article.visitNum++;//游览次数+1
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         //查找用户登录，未找到则代表没登录
         userId = sharedPreferences.getInt("userId", -1);
@@ -218,7 +218,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 Gson gson = new GsonBuilder().registerTypeAdapter(Timestamp.class, new TimestampAdapter()).create();
                 String json = gson.toJson(article);
                 RequestBody create =  RequestBody.create(json, MediaType.parse("application/json; charset=utf-8"));
-                Request build = new Request.Builder().url("http://10.44.174.235:8083/androidArticle/updateArticle").header("Authorization",MainApplication.getInstance().tokenMap.get("tokenHead")+" "+MainApplication.getInstance().tokenMap.get("token")).post(create).build();
+                Request build = new Request.Builder().url("http://192.168.1.7:8083/androidArticle/updateArticle").header("Authorization",MainApplication.getInstance().tokenMap.get("tokenHead")+" "+MainApplication.getInstance().tokenMap.get("token")).post(create).build();
                 try {
                     Response execute = okHttpClient.newCall(build).execute();
                 } catch (IOException e) {

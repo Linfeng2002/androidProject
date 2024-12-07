@@ -60,7 +60,7 @@ public class LoginViewModel extends ViewModel {
                     .add("authCode",authCode)
                     .build();
             Request build = new Request.Builder()
-                    .url("http://10.44.174.235:8083/androidUser/login")
+                    .url("http://192.168.1.7:8083/androidUser/login")
                     .post(builder)
                     .build();
             okHttpClient.newCall(build).enqueue(new Callback() {
@@ -94,7 +94,7 @@ public class LoginViewModel extends ViewModel {
         new Thread(() -> {
             OkHttpClient okHttpClient = new OkHttpClient();
             Gson gson = new Gson();
-            Request build = new Request.Builder().url("http://10.44.174.235:8083/androidUser/getById?userId=" + MainApplication.getInstance().tokenMap.get("id"))
+            Request build = new Request.Builder().url("http://192.168.1.7:8083/androidUser/getById?userId=" + MainApplication.getInstance().tokenMap.get("id"))
                     .header("Authorization", MainApplication.getInstance().tokenMap.get("tokenHead")+" " +MainApplication.getInstance().tokenMap.get("token")).build();
             try {
                 Response execute = okHttpClient.newCall(build).execute();

@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
     public void getAuthCode(String username) {
         new Thread(() -> {
             OkHttpClient okHttpClient = new OkHttpClient();
-            Request build = new Request.Builder().url("http://10.44.174.235:8083/androidUser/getAuthCode?username="+username).get().build();
+            Request build = new Request.Builder().url("http://192.168.1.7:8083/androidUser/getAuthCode?username="+username).get().build();
             Gson gson = new Gson();
             okHttpClient.newCall(build).enqueue(new Callback() {
                 @Override

@@ -59,9 +59,7 @@ public class MyFragment extends Fragment {
                 gotoLogin();
             }else{
                 Intent intent = new Intent(getActivity(), history.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("recordArticle", (Serializable) personalInformation.recordArticle);
-                intent.putExtras(bundle);
+                intent.putExtra("status","游览记录");
                 startActivity(intent);
             }
 
@@ -72,9 +70,7 @@ public class MyFragment extends Fragment {
                 gotoLogin();
             }else {
                 Intent intent = new Intent(getActivity(), history.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("attentionArticle", (Serializable) personalInformation.attentionArticle);
-                intent.putExtras(bundle);
+                intent.putExtra("status","收藏记录");
                 startActivity(intent);
             }
 
@@ -122,6 +118,22 @@ public class MyFragment extends Fragment {
                         }
                     });
                 AlertDialog alert = builder.create(); // 根据建造器构建提醒对话框对象
+                alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        personalInformation= MainApplication.getInstance().personalInformations;
+                        //设置收藏，游览历史，优惠券数量
+                        binding.myMessageFavorArticle.setText(getString(R.string.likeHistory,personalInformation.attentionArticle.size()));
+                        binding.myMessageRecordArticle.setText(getString(R.string.recordHistory,personalInformation.recordArticle.size()));
+                        //配置名字和头像
+                        binding.myMessageName.setText(personalInformation.username);
+                        Glide.with(getActivity()).load(personalInformation.userPicture).apply(RequestOptions.circleCropTransform()).into(binding.myMessagePicture);
+                        //设置点赞数关注数粉丝数
+                        binding.myMessageFollowerNumber.setText(getString(R.string.follower_number,personalInformation.follower.size()));
+                        binding.myMessageFanNumber.setText(getString(R.string.fans_number,personalInformation.fans.size()));
+                        binding.myMessageLikeNumber.setText("点赞"+String.valueOf(personalInformation.likeNumber));
+                    }
+                });
                 alert.show(); // 显示提醒对话框
             }
         });

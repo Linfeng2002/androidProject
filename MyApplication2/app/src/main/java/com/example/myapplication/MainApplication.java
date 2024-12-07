@@ -86,11 +86,11 @@ public class MainApplication extends Application {
             int userId = sharedPreferences.getInt("userId", -1);
             OkHttpClient okHttpClient = new OkHttpClient();
             Gson gson = new Gson();
-            Request build = new Request.Builder().url("http://10.44.174.235:8083/androidArticle/getRecommendArticle?userId=" + userId).build();
+            Request build = new Request.Builder().url("http://192.168.1.7:8083/androidArticle/getRecommendArticle?userId=0" ).build();
             okHttpClient.newCall(build).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
+                    e.printStackTrace();
                 }
 
                 @Override
@@ -99,7 +99,9 @@ public class MainApplication extends Application {
                     Type resultType = new TypeToken<Result<List<Article>>>() {}.getType();
                     Result<List<Article>> result = gson.fromJson(string, resultType);
                     if(result.getCode()==200){
-                        articleList=(List<Article>)result.getData();
+                        List<Article> temp=(List<Article>)result.getData();
+                        articleList.clear();
+                        articleList.addAll(temp);
                     }
                 }
             });

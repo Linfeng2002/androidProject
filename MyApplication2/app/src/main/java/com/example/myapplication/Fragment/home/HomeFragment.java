@@ -76,18 +76,19 @@ public class HomeFragment extends Fragment {
                 new Thread(() -> {
                     OkHttpClient okHttpClient = new OkHttpClient();
                     Gson gson = new Gson();
-                    Request build = new Request.Builder().url("http://10.44.174.235:8083/androidArticle/getSearchArticle?searchMessage=" + s + "&userId=" + userId).build();
+                    Request build = new Request.Builder().url("http://192.168.1.7:8083/androidArticle/getSearchArticle?searchMessage=" + s + "&userId=" + userId).build();
                     try {
                         Response execute = okHttpClient.newCall(build).execute();
                         Type resultType = new TypeToken<Result<List<Article>>>() {}.getType();
                         Result<List<Article>> result = gson.fromJson(execute.body().string(), resultType);
                         if(result.getCode()==200){
                             List<Article> articles=(List<Article>)result.getData();
+                            MainApplication.getInstance().articleList=articles;
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {//跳转到搜索页面
                                     Intent intent = new Intent(getActivity(), article_search.class);
-                                    intent.putExtra("articles", (Serializable) articles);
+
                                     startActivity(intent);
                                 }
                             });

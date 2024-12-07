@@ -44,13 +44,13 @@ public class article_search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityArticleSearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        list=(List<Article>) getIntent().getSerializableExtra("articles");
+        list=MainApplication.getInstance().articleList;
         GridView listView=binding.searchResult;
         ArticleAdapter articleAdapter = new ArticleAdapter(article_search.this, list);
         listView.setAdapter(articleAdapter);
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             Intent intent = new Intent(article_search.this, ArticleDetailActivity.class);
-            intent.putExtra("article", list.get(i));
+            intent.putExtra("index", i);
             startActivity(intent);
         });
         Toolbar toolbar=binding.articleSearchToolbar;
@@ -82,7 +82,7 @@ public class article_search extends AppCompatActivity {
                         new Thread(() -> {
                             OkHttpClient okHttpClient = new OkHttpClient();
                             Gson gson = new Gson();
-                            Request build = new Request.Builder().url("http://10.44.174.235:8083/androidArticle/getSearchArticle?searchMessage=" + query + "&userId=" + userId).build();
+                            Request build = new Request.Builder().url("http://192.168.1.7:8083/androidArticle/getSearchArticle?searchMessage=" + query + "&userId=" + userId).build();
                             try {
                                 Response execute = okHttpClient.newCall(build).execute();
                                 Type resultType = new TypeToken<Result<List<Article>>>() {}.getType();

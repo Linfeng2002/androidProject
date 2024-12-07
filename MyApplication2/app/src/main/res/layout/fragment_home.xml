@@ -41,7 +41,7 @@
                 <!-- 攻略推送-->
                 <GridView android:id="@+id/place_recommend"
                     android:layout_width="match_parent"
-                    android:layout_height="600dp"
+                    android:layout_height="1000dp"
                     android:numColumns="2"
                     android:verticalSpacing="15dp"
                     android:horizontalSpacing="15dp"

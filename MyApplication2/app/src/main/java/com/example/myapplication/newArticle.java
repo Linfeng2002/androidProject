@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -94,7 +95,7 @@ public class newArticle extends AppCompatActivity {
                 }
             }
             RequestBody requestBody = builder.build();
-            Request build = new Request.Builder().url("http://10.44.174.235:8083/androidArticle/insertArticle").header("Authorization", MainApplication.getInstance().tokenMap.get("tokenHead") + " " + MainApplication.getInstance().tokenMap.get("token")).post(requestBody).build();
+            Request build = new Request.Builder().url("http://192.168.1.7:8083/androidArticle/insertArticle").header("Authorization", MainApplication.getInstance().tokenMap.get("tokenHead") + " " + MainApplication.getInstance().tokenMap.get("token")).post(requestBody).build();
             okHttpClient.newCall(build).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -109,6 +110,8 @@ public class newArticle extends AppCompatActivity {
                         runOnUiThread(() -> {
                             //执行成功后保存到本地
                             MainApplication.getInstance().personalInformations.userArticle.add((Article) result.getData());
+                            Toast.makeText(newArticle.this,"发表成功",Toast.LENGTH_SHORT).show();
+                            finish();
                         });
                     }
 

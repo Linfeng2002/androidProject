@@ -29,22 +29,22 @@ public class history extends AppCompatActivity {
         setContentView(binding.getRoot());
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {//判断传入的是游览历史还是收藏历史
-            Articles = (List<Article>) bundle.getSerializable("recordArticle");
-            if (Articles != null) {
+            String status = getIntent().getStringExtra("status");
+            if (status.equals("游览历史")) {
+                Articles=MainApplication.getInstance().personalInformations.recordArticle;
                 binding.historyToolbar.setTitle("游览历史");
             } else {
-                Articles = (List<Article>) bundle.getSerializable("attentionArticle");
+                Articles=MainApplication.getInstance().personalInformations.attentionArticle;
                 binding.historyToolbar.setTitle("收藏历史");
             }
         }
         if(!Articles.isEmpty()){//配置适配器
             ArticleAdapter articleAdapter = new ArticleAdapter(this, Articles);
             binding.historyMessage.setAdapter(articleAdapter);
-            List<Article> finalArticles = Articles;
             binding.historyMessage.setOnItemClickListener((adapterView, view, i, l) -> {
 
                 Intent intent = new Intent(history.this, ArticleDetailActivity.class);
-                intent.putExtra("article", finalArticles.get(i));
+                intent.putExtra("index", i);
                 startActivity(intent);
             });
         }else binding.historyToolbar.setSubtitle("暂无记录");
